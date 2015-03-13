@@ -1,0 +1,8 @@
+a b
+q0 q1 q5 0
+q1 q6 q2 0
+q2 q3 q5 0
+q3 q6 q4 0
+q4 q1 q5 0
+q5 q6 q6 1 
+q6 q6 q6 0

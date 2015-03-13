@@ -1,7 +1,7 @@
 /* -------------------------------------------------------------------
- * Proyecto1.java
- * versión 1.0
- * Copyright (C) 2015  José Ricardo Rodríguez Abreu.
+ * EsNumero.java
+ * versión 2.0
+ * Copyright (C) 2014  José Ricardo Rodríguez Abreu.
  * Facultad de Ciencias,
  * Universidad Nacional Autónoma de México, Mexico.
  *
@@ -25,18 +25,31 @@
  * 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * -------------------------------------------------------------------
  */
-
 package mx.unam.ciencias.automatas;
 
-import java.util.Hashtable;
 
 /**
  * @author Jose Ricardo Rodriguez Abreu
- * @version 1.0
- * @since Mar 8 2015.
- * <p>
- * Clase principal del proyecto1.</p>
+ * @version 2.0
+ * @since Aug 27 2014.
+ * <p>Clase para ver si una cadena representa o no un número.</p>
  *
- * <p>
- * Clase principal del proyecto.</p>
- */
+ * <p>Con un sólo método, el propósito de esta clase es conocer
+ si una cadena representa o no un número.</p>
+*/
+public class EsNumero{
+    
+    /**
+     * Método único de la clase.
+     * @param posibleNumero - es una cadena que puede o no ser número.
+     * @return true sólo si es un número o false caso contrario.
+     */
+    public static boolean esNumero(String posibleNumero) {
+        try {
+            double num = Double.parseDouble(posibleNumero);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }    
+} //Fin de EsNumero.java
