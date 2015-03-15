@@ -1,1 +1,0 @@
-ricardo@Dell-inspiron-15.6044:1426209232

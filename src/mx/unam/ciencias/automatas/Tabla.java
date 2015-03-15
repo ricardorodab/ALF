@@ -66,11 +66,12 @@ public class Tabla {
      */
     public Tabla() {
     }
-
+    
     /**
      * Metodo constructor de una tabla dado un archivo.
      *
      * @param entrada - es el archivo de entrada donde viene la tabla.
+     * @param entrada2 - es el nombre del archivo.
      */
     public Tabla(FileReader entrada, String entrada2){
 	String linea,numLineaS;
@@ -88,55 +89,48 @@ public class Tabla {
 		    numEstados++;
 	    numEstados--;
 	    numLineas.close();
-	estados = new Estados[numEstados];
-	for(int i = 0; i < estados.length; i++){
-	    estados[i] = new Estados(i, false);
-	}
-	texto = new BufferedReader(new FileReader(entrada2));
-	linea = texto.readLine();
-	if(linea == null)
-	    throw new NullPointerException();
-	linea = linea.replace(" ","");
-	linea = linea.replace(",","");
-	letras = linea.toCharArray();
-	letrasC = new Character[letras.length];
-	vecinos = new String[letras.length];
-	for(int i = 0; i < letras.length; i++)
-	    letrasC[i] = new Character(letras[i]);
-	while((linea = texto.readLine()) != null){
+	    estados = new Estados[numEstados];
+	    for(int i = 0; i < estados.length; i++){
+		estados[i] = new Estados(i, false);
+	    }
+	    texto = new BufferedReader(new FileReader(entrada2));
+	    linea = texto.readLine();
+	    if(linea == null)
+		throw new NullPointerException();
 	    linea = linea.replace(" ","");
 	    linea = linea.replace(",","");
-	    //	    for(int u = 0; u < linea.length() ; u++){
-	    //	if(linea.charAt(u) == 'q'){
-	    int k,u = 1;
-	    Estados estadoTemp = estados[estadoNum];
-	    System.out.println(estadoNum);
-	    if(linea.charAt(linea.length()-1) == '1')
-		estados[estadoNum].setFinal(true);	  
-	    estadoNum++;
-	    while(linea.charAt(u) != 'q' && u < linea.length()-1)
-		u++;
-	    estadoTemp.setNombre(linea.substring(0,u-1));
-	    //Borrar esto
-	    //System.out.println(estadoTemp.dameNombre());
-	    for(int j = 0; j < letras.length; j++){
-		k = u;
-		System.out.println(k+" "+u);
-		System.out.println(linea.charAt(u)); 
-		while(linea.charAt(++u) != 'q' && u+1 < linea.length()){		System.out.println(linea.substring(k,u)); }
-		estadoTemp.setEstadosSiguientes(letras[j],estados[Integer.parseInt(linea.substring(k+1,u))]);									  }
-	    
-	}
-	this.estados = numEstados;
-	this.alfabeto = letrasC;
-	this.listEstados = estados;
+	    letras = linea.toCharArray();
+	    letrasC = new Character[letras.length];
+	    vecinos = new String[letras.length];
+	    for(int i = 0; i < letras.length; i++)
+		letrasC[i] = new Character(letras[i]);
+	    while((linea = texto.readLine()) != null){
+		linea = linea.replace(" ","");
+		linea = linea.replace(",","");
+		int k,u = 1;
+		Estados estadoTemp = estados[estadoNum];
+		if(linea.charAt(linea.length()-1) == '1')
+		    estados[estadoNum].setFinal(true);	  
+		estadoNum++;
+		while(linea.charAt(u) != 'q' && u < linea.length()-1)
+		    u++;
+		estadoTemp.setNombre(linea.substring(0,u-1));
+		for(int j = 0; j < letras.length; j++){
+		    k = u;
+		    while(linea.charAt(++u) != 'q' && u+1 < linea.length());
+		    estadoTemp.setEstadosSiguientes(letras[j],estados[Integer.parseInt(linea.substring(k+1,u))]);									  }
+		
+	    }
+	    this.estados = numEstados;
+	    this.alfabeto = letrasC;
+	    this.listEstados = estados;
 	}catch(IOException e){
 	    System.err.println("Error al procesar el archivo. Ver formato y asegurese de que el arhivo existe");
 	}
     }
     
     
-
+    
     /**
      * Metodo constructor de la tabla.
      *
@@ -148,11 +142,11 @@ public class Tabla {
         this.alfabeto = alfabeto;
         this.listEstados = new Estados[this.estados];
     }
-
+    
     /**
      * Metodo para colocar los estados de nuestra tabla.
      *
-     * @param estados
+     * @param estados - Son los estados de la tabla.
      */
     public void setEstados(Estados[] estados) {
         this.listEstados = estados;
@@ -175,10 +169,25 @@ public class Tabla {
     
     /**
      * Metodo para poder ver los estados y su transiciones.
+     *
+     * @param alfabeto - es el alfabeto de la tabla.
      */
     public void imprime(Character[] alfabeto) {
+	System.out.print("Alfabeto del autómata: ");
+	    for (int i = 0; i < alfabeto.length; i++)
+		if(i+1 < alfabeto.length)
+		    System.out.print(alfabeto[i]+", ");
+		else
+		    System.out.print(alfabeto[i]);
+	System.out.println("");
         for (Estados e : listEstados) {
-            System.out.println(e.id() + " A: " + e.dameEstadoSiguiente(alfabeto[0]).id() + " B: " + e.dameEstadoSiguiente(alfabeto[1]).id() + " F: " + e.esFinal());
+            System.out.print("q"+e.id());
+	    for(int j = 0; j < alfabeto.length; j++)
+		System.out.print(" q" + e.dameEstadoSiguiente(alfabeto[j]).id());
+	    if(e.esFinal())
+		System.out.println(" 1");
+	    else
+		System.out.println(" 0");
         }
     }
 
@@ -243,13 +252,17 @@ public class Tabla {
                 }
             }
         }
+	//NOTA:
+	//SI SE DESEA VER LA MATRIZ TRIANGULAR DE REDUCCIÓN DESCOMENTAR EL SIGUIENTE FRAGMENTO DE CÓDIGO:
 	/*
+	System.out.println("\nMatriz de reducción: ");
         for (int ñ = 0; ñ < matriz.length; ñ++) {
          for (int m = 0; m <= ñ; m++) {
          System.out.print(matriz[ñ][m] + " ");
          }
          System.out.print("\n");
          }
+	System.out.print("\n");	
 	*/
         LinkedList<Integer> saltar = new LinkedList<Integer>();
         boolean ultimoAgreg = false;
@@ -270,7 +283,6 @@ public class Tabla {
             saltar.add(i);                       
             equivalentes.add(l);
         }
-        //ESTO MMMMMMM.... SUENA MAL
         if(!ultimoAgreg){
             LinkedList<Estados> l = new LinkedList<Estados>();
             l.add(this.listEstados[this.listEstados.length-1]);
@@ -279,8 +291,30 @@ public class Tabla {
         
         Estados[] nuevos = getNuevosEstados(equivalentes);
         Tabla t = new Tabla(nuevos.length, alfabeto);
-        t.setEstados(nuevos);
+	t.setEstados(quitaEstados(nuevos));
+        //t.setEstados(nuevos);
         return t;
+    }
+
+    //Método auxiliar para quitar estados que no se pueden llegar.
+    private Estados[] quitaEstados(Estados[] estados){
+	LinkedList<Estados> lista = new LinkedList<Estados>();
+	quitaEstadosRecursivo(estados[0], lista);
+	Estados[] nuevosEstados = new Estados[lista.size()];
+	int i = 0;
+	for(Estados e : estados)
+	    if(lista.contains(e))
+		nuevosEstados[i++] = e;
+	return nuevosEstados;
+    }
+
+    //Método auxiliar recursivo de quitaEstados.
+    private void quitaEstadosRecursivo(Estados estado, LinkedList<Estados> l){
+	if(l.contains(estado))
+	    return;
+	l.add(estado);
+	for(Character c : alfabeto)
+	    quitaEstadosRecursivo(estado.dameEstadoSiguiente(c), l);
     }
 
     //Método auxiliar para crear nuevos estados dado una lista de listas de estados.

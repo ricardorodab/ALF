@@ -63,7 +63,7 @@ public class Estados{
      * Metodo constructor de un estado.
      *
      * @param numEstado - Es el identificador único del estado.
-     * @param esFinal - True solo si es estado final.
+     * @param esFinale - True solo si es estado final.
      */
     public Estados(int numEstado, boolean esFinale) {
 	this.numEstado = numEstado;
@@ -75,7 +75,7 @@ public class Estados{
      * Metodo constructor de un estado.
      *
      * @param numEstado - Es el identificador único del estado.
-     * @param esFinal - True solo si es estado final.
+     * @param esFinale - True solo si es estado final.
      * @param nombre - es el nombre del estado.
      */
     public Estados(int numEstado, boolean esFinale, String nombre) {
@@ -106,7 +106,7 @@ public class Estados{
     /**
      * Metodo para asignar nombre a los estados.
      *
-     * @param - nombre Es el nombre del estado.
+     * @param nombre - Es el nombre del estado.
      */
     public void setNombre(String nombre){
 	this.nombre = nombre;
@@ -145,8 +145,8 @@ public class Estados{
     /**
      * Metodo que nos regresa un vecino dado una llave.
      *
+     * @param llave - es la llave del vecino.
      * @return Estado vecino dada una llave.
-     * @throws NullPointerException - si la llave es null.
      */
     public Estados dameEstadoSiguiente(Character llave) {
 	return this.vecinos.get(llave);

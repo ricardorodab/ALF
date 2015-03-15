@@ -28,12 +28,12 @@
 
 package mx.unam.ciencias.automatas;
 
-//import java.io.FileReader;
-//import java.io.FileWriter;
-//import java.io.BufferedReader;
-//import java.io.BufferedWriter;
-//import java.io.FileNotFoundException;
-//import java.io.IOException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 //import java.util.LinkedList;
 //import java.util.Scanner;
 //import java.util.NoSuchElementException;
@@ -48,7 +48,18 @@ package mx.unam.ciencias.automatas;
  *
  * <p>
  * Desde esta clase podemos leer el archivo y trabajar con el.</p>
- */
+ *
 public class Entrada {
 
-}
+
+    public static void lee(String entrada) throws IOException{
+	String linea;
+	BufferedReader texto;
+	try{
+	    texto = new BufferedReader(new FileReader(entrada));
+	    while
+	    
+	}
+    }
+
+    } */
